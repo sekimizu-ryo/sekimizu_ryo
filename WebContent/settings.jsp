@@ -21,6 +21,7 @@
 	</div>
 	<c:remove var="errorMessages" scope="session"/>
 </c:if>
+
 <form action="settings" method="post"><br />
 
 	<input type="hidden" name="id"  value="${editUser.id}" id="id"/>
@@ -35,14 +36,21 @@
 	<input name="name" value="${editUser.name}" id="name"/><br />
 
 	<label for="branch_id">支店</label>
-	<input name="branch_id" value="${editUser.branch_id}" id="branch_id"/> <br />
+	<select name="branch_id">
+		<c:forEach items="${branches}" var="branche" >
+		<option value="${branche.id}"> <c:out value="${branche.name}"></c:out> </option>
+		</c:forEach>
+	</select>
 
 	<label for="department_id">部署・役職</label>
-	<input name="department_id" value="${editUser.department_id}" id="department_id"/> <br />
-
-	   <input type="submit" value="編集" /> <br />
-
-	<a href="./">戻る</a>
+	<select name="department_id">
+		<c:forEach items="${departments}" var="department" >
+			<option value="${department.id}"> <c:out value="${department.name}"></c:out> </option>
+		</c:forEach>
+	</select>
+	<br />
+	   <input type="submit" value="編集" />
+		<a href="./">戻る</a>
 </form>
 <div class="copyright">Copyright(c)ryo sekimizu</div>
 </div>

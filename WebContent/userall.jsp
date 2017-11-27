@@ -21,8 +21,38 @@
 	</div>
 	<c:remove var="errorMessages" scope="session"/>
 </c:if>
+<script type="text/javascript">
+function stopcheck(){
+
+	if(window.confirm('このユーザーのアカウント停止させますか？')){ // 確認ダイアログを表示
+
+		return true; // 「OK」時は送信を実行
+
+	}
+	else{ // 「キャンセル」時の処理
+
+		window.alert('キャンセルされました'); // 警告ダイアログを表示
+		return false; // 送信を中止
+	}
+
+}
+function Resurrectioncheck(){
+
+	if(window.confirm('このユーザーのアカウント復活させますか？')){ // 確認ダイアログを表示
+
+		return true; // 「OK」時は送信を実行
+
+	}
+	else{ // 「キャンセル」時の処理
+
+		window.alert('キャンセルされました'); // 警告ダイアログを表示
+		return false; // 送信を中止
+	}
+
+}
 
 
+</script>
 
 <form action="userall" method="post">
 
@@ -30,7 +60,7 @@
 		<label for="name">名称</label>
 		<label for="branch_id">支店</label>
 		<label for="department_id">部署・役職</label>
-		<a href='signup.jsp'>新規登録</a>
+		<a href='signup'>新規登録</a>
 		<a href="./">戻る</a>
 <br />
 	<c:forEach items="${users}" var="user">
@@ -43,20 +73,23 @@
 	</c:forEach>
 	</form>
 
-<c:forEach items="${users}" var="user">
-		<form action="stop" method="post">
-	    <input type="hidden" name="id" value="${user.id}" id="id">
+	<form action="stop" method="post">
+	<c:forEach items="${users}" var="user">
+	<input type="hidden" name="id" value="${user.id}" id="id">
 			<c:if test="${user.is_working==0}" >
 			<input type="hidden" name="is_working" value="1" id="is_working">
-			<input type="submit" value="停止" /> <br />
+			<input type="submit" value="停止" onclick="stopcheck()"/> <br />
+
 			</c:if>
 
             <c:if test="${user.is_working==1}">
 			<input type="hidden" name="is_working" value="0" id="is_working">
-			<input type="submit" value="復活" /> <br />
+			<input type="submit" value="復活" onclick="Resurrectioncheck()"/> <br />
 			</c:if>
-		</form>
-</c:forEach>
+	</c:forEach>
+	   </form>
+
+
    <br/>
 <div class="copyright">Copyright(c)ryo sekimizu</div>
 </div>

@@ -79,9 +79,14 @@ public class NewPostServlet extends HttpServlet {
 			posts.add("カテゴリーがありません。");
 		}
 
-		if (1000 < text.length()) {
-			posts.add("1000文字以下で入力してください");
+		if (30 < subject.length()) {
+			posts.add("件名は30文字以下で入力してください");
 		}
+
+		if (1000 < text.length()) {
+			posts.add("本文は1000文字以下で入力してください");
+		}
+
 		if (posts.size() == 0) {
 			return true;
 		} else {

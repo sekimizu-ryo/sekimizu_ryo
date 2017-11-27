@@ -13,8 +13,12 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 
+import sekimizu.beans.Branches;
 import sekimizu.beans.Users;
+import sekimizu.beans.departments;
 import sekimizu.service.UserService;
+import sekimizu.service.branchesService;
+import sekimizu.service.departmentsService;
 
 @WebServlet(urlPatterns = { "/signup" })
 public class SignUpServlet extends HttpServlet {
@@ -24,6 +28,10 @@ public class SignUpServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
 
+		List<Branches> branches = new branchesService().getBranches();
+		List<departments>departments= new departmentsService().getDepartments();
+		request.setAttribute("branches",branches);
+		request.setAttribute("departments",departments);
 		request.getRequestDispatcher("signup.jsp").forward(request, response);
 	}
 
@@ -47,26 +55,43 @@ public class SignUpServlet extends HttpServlet {
 
 		} else {
 			Users users = new Users();
+			List<Branches> branches = new branchesService().getBranches();
+			List<departments>departments= new departmentsService().getDepartments();
 			users.setlogin_id(request.getParameter("login_id"));
 			users.setName(request.getParameter("name"));
 			users.setbranch_id(Integer.parseInt(request.getParameter("branch_id")));
 			users.setdepartment_id(Integer.parseInt(request.getParameter("department_id")));
 			request.setAttribute("user", users);
 			session.setAttribute("errorMessages", messages);
+			request.setAttribute("branches",branches);
+			request.setAttribute("departments",departments);
 			request.getRequestDispatcher("signup.jsp").forward(request,response);
-			response.sendRedirect("userall");
 		}
 	}
 
 	private boolean isValid(HttpServletRequest request, List<String> messages ) {
 		String login_id = request.getParameter("login_id");
 		String password = request.getParameter("password");
+		String name = request.getParameter("name");
 
 		if (StringUtils.isEmpty(login_id) == true) {
 			messages.add("ログイン名を入力してください");
-		}
+			}else if (!login_id.matches("^[0-9A-Za-z]{6,20}")) {
+			messages.add("ログイン名は半角英数字で6文字以上20文字以下としてください");
+			}
+
 		if (StringUtils.isEmpty(password) == true) {
 			messages.add("パスワードを入力してください");
+		}else if (!password.matches("\\^[0-9A-Za-z]{6,20}")) {
+			messages.add("パスワードは半角文字で6文字以上20文字以下としてください");
+			}
+
+		if (StringUtils.isEmpty(name) == true) {
+			messages.add("名称を入力してください");
+		}
+
+		if (10 < name.length()) {
+			messages.add("名称は10文字以下で入力してください");
 		}
 
 		// TODO アカウントが既に利用されていないか、メールアドレスが既に登録されていないかなどの確認も必要

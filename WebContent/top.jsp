@@ -23,6 +23,37 @@
 	<c:remove var="errorMessages" scope="session"/>
 </c:if>
 <div class="header">
+<script type="text/javascript">
+function Postcheck(){
+
+	if(window.confirm('投稿を削除しますか？')){ // 確認ダイアログを表示
+
+		return true; // 「OK」時は送信を実行
+
+	}
+	else{ // 「キャンセル」時の処理
+
+		window.alert('キャンセルされました'); // 警告ダイアログを表示
+		return false; // 送信を中止
+	}
+
+}
+
+function Commentcheck(){
+
+	if(window.confirm('コメントを削除しますか？')){ // 確認ダイアログを表示
+
+		return true; // 「OK」時は送信を実行
+
+	}
+	else{ // 「キャンセル」時の処理
+
+		window.alert('キャンセルされました'); // 警告ダイアログを表示
+		return false; // 送信を中止
+	}
+
+}
+</script>
 
 	<c:if test="${ not empty loginUser }">
 		<a href="post">新規投稿画面</a>
@@ -34,18 +65,15 @@
 
 <c:if test="${ not empty loginUser }">
 	<div class="profile">
-		<div class="login_id"><h2><c:out value="${loginUser.login_id}" /></h2></div>
-		<div class="name">
-			<c:out value="${loginUser.name}" />
-		</div>
+		<div class="login_id"><h3><c:out value="${loginUser.login_id}" />でログイン中！！！</h3></div>
 	</div>
 </c:if>
 
 <div class="form-area">
 	<form action="./" method="get">
 		<label for="category">カテゴリー</label>
-		<br/>
          <input type="text" name="category" value="${category}" />
+         <br/>
 		 <input type="date" name="StartDate" value="${StartDate}" >
 		<input type="date" name="EndDate"  value="${EndDate}">
 		<input type="submit" value="検索" />
@@ -63,17 +91,17 @@
 		<c:out value="${post.category}" />
 		<br />
 		<label for="insertDate">日時</label>
-		<input type="text" name="insertDate" value="${post.insertDate}">
-		<!--<fmt:formatDate value="${post.insertDate}" pattern="yyyy/MM/dd HH:mm:ss" />-->
+		<c:out value="${post.insertDate}" />
 
 		<form action="delete" method="post">
 			<input type="hidden" name="id" value="${post.id}" id="id">
-			<input type="submit" value="削除" /> <br />
+			<input type="submit" value="削除" onclick="return Postcheck()" /> <br />
 		</form>
 
 		<form action="comment" method="post">
 			<input type="hidden" name="postid"  value="${post.id}" id="id"/>
-			<input name="text"  value="${comment.text}" />
+		     <textarea  name="text"  rows="4" cols="40">
+			</textarea>
 			<br />
 			<input type="submit" value="コメントを投稿">（500文字まで）
 			<br />
@@ -85,7 +113,7 @@
 				<c:out value="${comment.text}" />
 		<form action="commentdelete" method="post">
 				<input type="hidden" name="id" value="${comment.id}" id="id">
-				<input type="submit" value="コメント削除" /> <br />
+				<input type="submit" value="コメント削除" onclick="return Commentcheck()"/> <br />
 		</form>
 		</c:if>
 	</c:forEach>

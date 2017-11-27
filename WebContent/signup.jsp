@@ -32,14 +32,21 @@
 	<label for="name">名称</label>
 	<input name="name" value="${users.name}" id="name"/><br />
 
-	<label for="branch_id">支店</label>
-	<input name="branch_id" value="${users.branch_id}" id="branch_id"/> <br />
+ 	<label for="branch_id">支店</label>
+	<select name="branch_id">
+		<c:forEach items="${branches}" var="branche" >
+		<option value="${branche.id}"> <c:out value="${branche.name}"></c:out> </option>
+		</c:forEach>
+	</select>
 
 	<label for="department_id">部署・役職</label>
-	<input name="department_id" value="${users.department_id}" id="department_id"/> <br />
+	<select name="department_id">
+		<c:forEach items="${departments}" var="department" >
+			<option value="${department.id}"> <c:out value="${department.name}"></c:out> </option>
+		</c:forEach>
+	</select>
 
 	<input type="hidden" name="is_working" value="${users.is_working}" id="is_working"/> <br />
-
 	<input type="submit" value="登録" /> <br />
 	<a href="./">戻る</a>
 </form>

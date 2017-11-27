@@ -22,6 +22,7 @@ public class departmentsDao {
 			ps = connection.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			List<departments> departmentsList = toUserList(rs);
+			System.out.println(departmentsList.get(0).getName());
 			return  departmentsList;
 
 		} catch (SQLException e) {
