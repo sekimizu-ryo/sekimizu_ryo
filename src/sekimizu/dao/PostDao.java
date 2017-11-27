@@ -42,6 +42,7 @@ public class PostDao {
 			ps.setString(2, post.getText());
 		    ps.setString(3, post.getCategory());
 		    ps.setString(4, post.getuser_id());
+		    System.out.println(ps.toString());
 
 
 			ps.executeUpdate();
@@ -71,7 +72,7 @@ public class PostDao {
 	}
 
 
-	public List<Posts> getAllPost(Connection connection,String Sdate,String Edate,String category) {
+	public List<Posts> getAllPost(Connection connection,String sDate,String eDate,String category) {
 
 		PreparedStatement ps = null;
 		try {
@@ -83,18 +84,19 @@ public class PostDao {
 			sql.append(" insert_date < ?");
 
 			if(category != null){
-			sql.append("AND");
-			sql.append(" category = ?");
+				sql.append("AND");
+				sql.append(" category = ?");
 			}
+
+			sql.append("ORDER BY insert_date DESC");
 //			String sql = "SELECT * FROM posts WHERE insert_date >= ? AND insert_date<? AND category=?";
 //			ps = connection.prepareStatement(sql);
 			ps = connection.prepareStatement(sql.toString());
-			ps.setString(1,Sdate);
-			ps.setString(2,Edate);
+			ps.setString(1,sDate + "00:00:00");
+			ps.setString(2,eDate + "23:59:59");
 			if(category != null){
-			ps.setString(3,category);
+				ps.setString(3,category);
 			}
-			System.out.println(ps.toString());
 			ResultSet rs = ps.executeQuery();
 			List<Posts> postList = toUserList(rs);
 			return  postList;

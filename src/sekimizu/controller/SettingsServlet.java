@@ -94,10 +94,15 @@ public class SettingsServlet extends HttpServlet {
 
 		if (StringUtils.isEmpty(login_id) == true) {
 			messages.add("ログイン名を入力してください");
+		}else if (!login_id.matches("^[0-9A-Za-z]{6,20}")) {
+			messages.add("ログイン名は半角英数字で6文字以上20文字以下としてください");
 		}
+
 		if (StringUtils.isEmpty(password) == true) {
 			messages.add("パスワードを入力してください");
-		}
+		}else if (!password.matches("^[0-9A-Za-z!?@#$%]{6,20}")) {
+			messages.add("パスワードは半角文字で6文字以上20文字以下としてください");
+			}
 
 		if (StringUtils.isEmpty(name) == true) {
 			messages.add("名称を入力してください");

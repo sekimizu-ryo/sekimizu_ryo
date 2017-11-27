@@ -87,6 +87,10 @@ public class NewPostServlet extends HttpServlet {
 			posts.add("本文は1000文字以下で入力してください");
 		}
 
+		if (10 < category.length()) {
+			posts.add("カテゴリーは10文字以下で入力してください");
+		}
+
 		if (posts.size() == 0) {
 			return true;
 		} else {

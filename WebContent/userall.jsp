@@ -50,44 +50,36 @@ function Resurrectioncheck(){
 	}
 
 }
-
-
 </script>
-
-<form action="userall" method="post">
-
-		<label for="login_id">ログインID</label>
-		<label for="name">名称</label>
-		<label for="branch_id">支店</label>
-		<label for="department_id">部署・役職</label>
 		<a href='signup'>新規登録</a>
 		<a href="./">戻る</a>
 <br />
-	<c:forEach items="${users}" var="user">
-		<c:out value="${user.login_id}"/>
-		<c:out value="${user.name}"/>
-		<c:out value="${user.branch_id}"/>
-		<c:out value="${user.department_id}"/>
-		<a href='settings?id=<c:out value="${user.id}"/>'>編集</a>
-		<br/>
-	</c:forEach>
-	</form>
 
-	<form action="stop" method="post">
-	<c:forEach items="${users}" var="user">
-	<input type="hidden" name="id" value="${user.id}" id="id">
-			<c:if test="${user.is_working==0}" >
-			<input type="hidden" name="is_working" value="1" id="is_working">
-			<input type="submit" value="停止" onclick="stopcheck()"/> <br />
+	<table border=1>
+		<tr><th>ログインID</th><th>名称</th><th>支店</th><th>部署・役職</th><th>編集</th><th>停止・復活</th></tr>
+		<c:forEach items="${users}" var="user">
+			 <tr>
+				<td><c:out value="${user.login_id}"/></td><td><c:out value="${user.name}"/></td>
+				<td><c:out value="${branche.name}"></c:out></td><td><c:out value="${department.name}"></c:out></td>
+				<td><a href='settings?id=<c:out value="${user.id}"/>'>編集</a></td>
+			 	<td>
+				 	<form action="stop" method="post">
+						<input type="hidden" name="id" value="${user.id}" id="id">
+						<c:if test="${user.is_working==0}" >
+							<input type="hidden" name="is_working" value="1" id="is_working">
+							<input type="submit" value="停止" onclick="stopcheck()"/> <br />
+						</c:if>
 
-			</c:if>
+				        <c:if test="${user.is_working==1}">
+							<input type="hidden" name="is_working" value="0" id="is_working">
+							<input type="submit" value="復活" onclick="Resurrectioncheck()"/> <br />
+						</c:if>
+					</form>
+				</td>
+			 </tr>
 
-            <c:if test="${user.is_working==1}">
-			<input type="hidden" name="is_working" value="0" id="is_working">
-			<input type="submit" value="復活" onclick="Resurrectioncheck()"/> <br />
-			</c:if>
-	</c:forEach>
-	   </form>
+		</c:forEach>
+	</table>
 
 
    <br/>

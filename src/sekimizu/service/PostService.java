@@ -41,8 +41,6 @@ public class PostService {
 			connection = getConnection();
 			PostDao postDao = new PostDao();
 			List<Posts> ret = postDao.getAllPost(connection,Sdate,Edate,category);
-			System.out.println("サービス確認"+Sdate);
-			System.out.println("サービス確認"+Edate);
 			commit(connection);
 			return ret;
 

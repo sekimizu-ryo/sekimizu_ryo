@@ -48,7 +48,7 @@
 
 	<input type="hidden" name="is_working" value="${users.is_working}" id="is_working"/> <br />
 	<input type="submit" value="登録" /> <br />
-	<a href="./">戻る</a>
+	<a href="userall">戻る</a>
 </form>
 <div class="copyright">Copyright(c)ryo sekimizu</div>
 </div>

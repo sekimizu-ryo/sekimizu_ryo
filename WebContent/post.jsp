@@ -23,13 +23,13 @@
 </c:if>
 <form action="post" method="post"><br />
 
-	<label for="subject">件名</label>
+	<label for="subject">件名(30文字以内)</label>
 	<input name="subject" value="${post.subject}" /><br />
 
-	<label for="text">本文</label>
-	<input name="text" value="${post.text}"/> <br />
+	<label for="text">本文(1000文字以内)</label>
+	<textarea  name="text"  rows="4" cols="40"></textarea>
 
-	<label for="category">カテゴリー</label>
+	<label for="category">カテゴリー(10文字以内)</label>
 	<input name="category" value="${post.category}" /><br />
 
 	<input type="submit" value="登録" /> <br />

@@ -55,14 +55,14 @@ public class SignUpServlet extends HttpServlet {
 
 		} else {
 			Users users = new Users();
-			List<Branches> branches = new branchesService().getBranches();
-			List<departments>departments= new departmentsService().getDepartments();
 			users.setlogin_id(request.getParameter("login_id"));
 			users.setName(request.getParameter("name"));
 			users.setbranch_id(Integer.parseInt(request.getParameter("branch_id")));
 			users.setdepartment_id(Integer.parseInt(request.getParameter("department_id")));
-			request.setAttribute("user", users);
 			session.setAttribute("errorMessages", messages);
+			request.setAttribute("users", users);
+			List<Branches> branches = new branchesService().getBranches();
+			List<departments>departments= new departmentsService().getDepartments();
 			request.setAttribute("branches",branches);
 			request.setAttribute("departments",departments);
 			request.getRequestDispatcher("signup.jsp").forward(request,response);
@@ -82,7 +82,7 @@ public class SignUpServlet extends HttpServlet {
 
 		if (StringUtils.isEmpty(password) == true) {
 			messages.add("パスワードを入力してください");
-		}else if (!password.matches("\\^[0-9A-Za-z]{6,20}")) {
+		}else if (!password.matches("^[0-9A-Za-z!?@#$%]{6,20}")) {
 			messages.add("パスワードは半角文字で6文字以上20文字以下としてください");
 			}
 

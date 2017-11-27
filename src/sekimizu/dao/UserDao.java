@@ -177,8 +177,6 @@ public class UserDao {
 			sql.append(", branch_id = ?");
 			sql.append(", department_id = ?");
 			//sql.append(", update_date = CURRENT_TIMESTAMP");
-
-
 			sql.append(" WHERE");
 			sql.append(" id = ?");
 			//sql.append(" AND");

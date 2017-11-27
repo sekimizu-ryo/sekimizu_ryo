@@ -50,6 +50,7 @@
 	</select>
 	<br />
 	   <input type="submit" value="編集" />
+		<br />
 		<a href="./">戻る</a>
 </form>
 <div class="copyright">Copyright(c)ryo sekimizu</div>
