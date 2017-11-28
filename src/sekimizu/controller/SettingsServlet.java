@@ -62,6 +62,7 @@ public class SettingsServlet extends HttpServlet {
 			editUser.setId(Integer.parseInt(request.getParameter("id")));
 			editUser.setlogin_id(request.getParameter("login_id"));
 			editUser.setPassword(request.getParameter("password"));
+			editUser.setPassword(request.getParameter("passwordconfirm"));
 			editUser.setName(request.getParameter("name"));
 			editUser.setbranch_id(Integer.parseInt(request.getParameter("branch_id")));
 			editUser.setdepartment_id(Integer.parseInt(request.getParameter("department_id")));
@@ -73,6 +74,7 @@ public class SettingsServlet extends HttpServlet {
 			editUser.setId(Integer.parseInt(request.getParameter("id")));
 			editUser.setlogin_id(request.getParameter("login_id"));
 			editUser.setPassword(request.getParameter("password"));
+			editUser.setPassword(request.getParameter("passwordconfirm"));
 			editUser.setName(request.getParameter("name"));
 			editUser.setbranch_id(Integer.parseInt(request.getParameter("branch_id")));
 			editUser.setdepartment_id(Integer.parseInt(request.getParameter("department_id")));
@@ -90,6 +92,7 @@ public class SettingsServlet extends HttpServlet {
 
 		String login_id = request.getParameter("login_id");
 		String password = request.getParameter("password");
+		String passwordconfirm =request.getParameter("passwordconfirm");
 		String name = request.getParameter("name");
 
 		if (StringUtils.isEmpty(login_id) == true) {
@@ -98,11 +101,15 @@ public class SettingsServlet extends HttpServlet {
 			messages.add("ログイン名は半角英数字で6文字以上20文字以下としてください");
 		}
 
-		if (StringUtils.isEmpty(password) == true) {
-			messages.add("パスワードを入力してください");
-		}else if (!password.matches("^[0-9A-Za-z!?@#$%]{6,20}")) {
+		if(StringUtils.isEmpty(password) == true){
+
+		}else if (!password.matches("^[0-9A-Za-z!?@#$%]{1,20}")) {
 			messages.add("パスワードは半角文字で6文字以上20文字以下としてください");
 			}
+
+		if (!password.equals(passwordconfirm)) {
+			messages.add("パスワードが一致しません。");
+		}
 
 		if (StringUtils.isEmpty(name) == true) {
 			messages.add("名称を入力してください");

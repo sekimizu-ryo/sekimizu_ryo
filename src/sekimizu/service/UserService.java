@@ -6,6 +6,8 @@ import static sekimizu.utils.DBUtil.*;
 import java.sql.Connection;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 import sekimizu.beans.Users;
 import sekimizu.dao.UserDao;
 import sekimizu.utils.CipherUtil;
@@ -43,7 +45,7 @@ public class UserService {
 			connection = getConnection();
 
 			String encPassword = CipherUtil.encrypt(user.getPassword());
-			user.setPassword(encPassword);
+				user.setPassword(encPassword);
 
 			UserDao userDao = new UserDao();
 			userDao.insert(connection, user);
@@ -66,12 +68,16 @@ public class UserService {
 		try {
 			connection = getConnection();
 
+			if (StringUtils.isEmpty(user.getPassword()) == false) {
+			System.out.println("暗号化前"+user.getPassword());
 			String encPassword = CipherUtil.encrypt(user.getPassword());
 			user.setPassword(encPassword);
+			System.out.println("暗号化後"+user.getPassword());
+			}
 
+			System.out.println("サービス空白時"+user.getPassword());
 			UserDao userDao = new UserDao();
 			userDao.update(connection, user);
-
 			commit(connection);
 		} catch (RuntimeException e) {
 			rollback(connection);

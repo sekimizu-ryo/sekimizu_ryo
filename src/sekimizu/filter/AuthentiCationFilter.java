@@ -29,12 +29,19 @@ public class AuthentiCationFilter implements Filter {
 		Users loginUser = (Users) session.getAttribute("loginUser");
 		List<String> messages = new ArrayList<String>();
 
+		if (loginUser == null) {
+			messages.add("ログアウトされています。ログインしてください。");
+			session.setAttribute("errorMessages", messages);
+			((HttpServletResponse)response).sendRedirect("login");
+			return ;
+
+		}else
 		if (loginUser.getbranch_id() != 1||loginUser.getdepartment_id() != 1) {
-				messages.add("権限がありません");
+			messages.add("権限がありません");
 				session.setAttribute("errorMessages", messages);
 				((HttpServletResponse)response).sendRedirect("login");
 				return ;
-			}
+		}
 		chain.doFilter(request, response); // サーブレットを実行
 		System.out.println("AuthentiCationFilterが実行されました。");
 		}

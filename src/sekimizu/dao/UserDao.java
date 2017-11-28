@@ -10,6 +10,8 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 import sekimizu.beans.Users;
 import sekimizu.exception.NoRowsUpdatedRuntimeException;
 import sekimizu.exception.SQLRuntimeException;
@@ -172,7 +174,11 @@ public class UserDao {
 			StringBuilder sql = new StringBuilder();
 			sql.append("UPDATE users SET");
 			sql.append(" login_id = ?");
-			sql.append(", password = ?");
+			if (StringUtils.isEmpty(users.getPassword()) == false) {
+				System.out.println("DAO確認"+users.getPassword());
+				sql.append(", password = ?");
+			}
+			System.out.println("DAO確認　空白時"+users.getPassword());
 			sql.append(", name = ?");
 			sql.append(", branch_id = ?");
 			sql.append(", department_id = ?");
@@ -183,16 +189,24 @@ public class UserDao {
 			//sql.append(" update_date = ?");
 
 			ps = connection.prepareStatement(sql.toString());
-
+			if (StringUtils.isEmpty(users.getPassword()) == false) {
+			ps.setString(1, users.getlogin_id());
+			ps.setString(2, users.getName());
+			ps.setInt(3, users.getbranch_id());
+		    ps.setInt(4, users.getdepartment_id());
+			ps.setInt(5, users.getId());
+			System.out.println("DAOsetないとき"+users.getPassword());
+			}
 			ps.setString(1, users.getlogin_id());
 			ps.setString(2, users.getPassword());
 			ps.setString(3, users.getName());
 			ps.setInt(4, users.getbranch_id());
 		    ps.setInt(5, users.getdepartment_id());
 			ps.setInt(6, users.getId());
+			System.out.println("DAOsetあるとき"+users.getPassword());
+
+			System.out.println(ps.toString());
 		//	ps.setTimestamp(7,new Timestamp(users.getUpdateDate().getTime()));
-
-
 			int count = ps.executeUpdate();
 			if (count == 0) {
 				throw new NoRowsUpdatedRuntimeException();

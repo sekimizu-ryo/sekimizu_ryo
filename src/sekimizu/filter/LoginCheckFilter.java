@@ -32,8 +32,8 @@ public class LoginCheckFilter implements Filter {
 		List<String> messages = new ArrayList<String>();
 
 		if(!(((HttpServletRequest) request).getServletPath()).equals("/login")){
-			if (loginUser == null) {
 
+			if (loginUser == null) {
 				messages.add("ログアウトされています。ログインしてください。");
 				session.setAttribute("errorMessages", messages);
 				((HttpServletResponse)response).sendRedirect("login");
@@ -46,6 +46,7 @@ public class LoginCheckFilter implements Filter {
 
 	@Override
 	public void init(FilterConfig config) {
+
 	}
 
 	@Override

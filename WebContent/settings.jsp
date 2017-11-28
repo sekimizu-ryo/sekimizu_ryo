@@ -32,6 +32,9 @@
 	<label for="password">パスワード</label>
 	<input name="password" type="password" id="password"/> <br />
 
+		<label for="passwordconfirm">パスワード(確認)</label>
+	<input name="passwordconfirm" type="password" id="passwordconfirm"/> <br />
+
 	<label for="name">名称</label>
 	<input name="name" value="${editUser.name}" id="name"/><br />
 
