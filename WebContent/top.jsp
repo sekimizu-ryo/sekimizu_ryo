@@ -100,7 +100,7 @@ function Commentcheck(){
 
 		<form action="comment" method="post">
 			<input type="hidden" name="postid"  value="${post.id}" id="id"/>
-		     <textarea  name="text"  rows="4" cols="40"></textarea>
+		     <textarea  name="text"  rows="4" cols="40"><c:out value="${post.text}" /></textarea>
 			<br />
 			<input type="submit" value="コメントを投稿">（500文字まで）
 			<br />
