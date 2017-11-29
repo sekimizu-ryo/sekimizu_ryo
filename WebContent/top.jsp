@@ -3,6 +3,8 @@
 <%@page isELIgnored="false"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -59,7 +61,6 @@ function Commentcheck(){
 		<a href="post">新規投稿画面</a>
 		<a href="userall">管理画面</a>
 		<a href="logout">ログアウト</a>
-		<a href="./">ホーム</a>
 	</c:if>
 </div>
 
@@ -92,7 +93,8 @@ function Commentcheck(){
 			</c:if>
 		</c:forEach>
 		<label for="text">本文</label>
-		<c:out value="${post.text}" />
+		<c:forEach var="str" items="${fn:split(post.text,'
+')}" ><c:out value="${str}" /><br></c:forEach>
 		<label for="category">カテゴリー</label>
 		<c:out value="${post.category}" />
 		<br />
@@ -123,7 +125,8 @@ function Commentcheck(){
 				</c:if>
 			</c:forEach>
 			<br>
-			<c:out value="${comment.text}" />
+			<c:forEach var="str" items="${fn:split(comment.text,'
+')}" ><c:out value="${str}" /><br></c:forEach>
 			<c:if test="${comment.userId == loginUser.id}" >
 				<form action="commentdelete" method="post">
 					<input type="hidden" name="id" value="${comment.id}" id="id">

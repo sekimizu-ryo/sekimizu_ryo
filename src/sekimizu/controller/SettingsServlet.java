@@ -29,9 +29,36 @@ public class SettingsServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
+		HttpSession session = request.getSession();
+		List<String> messages = new ArrayList<String>();
 		String id = request.getParameter("id");
-		request.setAttribute("id", id);
+
+
+		if(StringUtils.isEmpty(id)){
+			messages.add("不正なIDです。");
+			session.setAttribute("errorMessages", messages);
+			response.sendRedirect("userall");
+			return;
+		}
+
+		if(!id.matches("^[0-9]*$")){
+			messages.add("不正なIDです。");
+			session.setAttribute("errorMessages", messages);
+			response.sendRedirect("userall");
+			return;
+		}
+
+		// 型変換　string -> int
+		Integer.parseInt(id);
+
 		Users editUser = new UserService().getId(id);
+
+		if(editUser == null) {
+			messages.add("不正なIDです。");
+			session.setAttribute("errorMessages", messages);
+			response.sendRedirect("userall");
+			return;
+		}
 		request.setAttribute("editUser", editUser);
 		List<Branches> branches = new branchesService().getBranches();
 		List<departments>departments= new departmentsService().getDepartments();

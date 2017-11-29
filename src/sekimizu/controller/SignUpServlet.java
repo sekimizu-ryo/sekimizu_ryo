@@ -72,6 +72,8 @@ public class SignUpServlet extends HttpServlet {
 		String login_id = request.getParameter("login_id");
 		String password = request.getParameter("password");
 		String name = request.getParameter("name");
+		int branch_id =Integer.parseInt(request.getParameter("branch_id"));
+		int department_id =Integer.parseInt(request.getParameter("department_id"));
 
 		if (StringUtils.isEmpty(login_id) == true) {
 			messages.add("ログイン名を入力してください");
@@ -87,6 +89,14 @@ public class SignUpServlet extends HttpServlet {
 
 		if (StringUtils.isEmpty(name) == true) {
 			messages.add("名称を入力してください");
+		}
+
+		System.out.println(branch_id);
+		if (branch_id==1&&department_id==3||branch_id==1&&department_id==4||branch_id==2&&department_id==1||branch_id==2&&department_id==2
+				||branch_id==3&&department_id==1||branch_id==3&&department_id==2
+				||branch_id==4&&department_id==1||branch_id==4&&department_id==2) {
+			messages.add("不正な組み合わせです。");
+
 		}
 
 		if (10 < name.length()) {
