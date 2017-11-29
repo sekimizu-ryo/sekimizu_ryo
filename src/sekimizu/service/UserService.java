@@ -38,6 +38,54 @@ public class UserService {
 	}
 
 
+	public Users getLoginId(String loginid) {
+
+		Connection connection = null;
+		try {
+			connection = getConnection();
+
+			UserDao userDao = new UserDao();
+			Users user = userDao.getLoginId(connection, loginid);
+
+			commit(connection);
+
+			return user;
+		} catch (RuntimeException e) {
+			rollback(connection);
+			throw e;
+		} catch (Error e) {
+			rollback(connection);
+			throw e;
+		} finally {
+			close(connection);
+		}
+	}
+
+
+	public Users getSettingLoginid(String loginid,String id) {
+
+		Connection connection = null;
+		try {
+			connection = getConnection();
+
+			UserDao userDao = new UserDao();
+			Users user = userDao.getSettingLoginid(connection, loginid,id);
+
+			commit(connection);
+
+			return user;
+		} catch (RuntimeException e) {
+			rollback(connection);
+			throw e;
+		} catch (Error e) {
+			rollback(connection);
+			throw e;
+		} finally {
+			close(connection);
+		}
+	}
+
+
 	public void register(Users user) {
 
 		Connection connection = null;
@@ -69,13 +117,9 @@ public class UserService {
 			connection = getConnection();
 
 			if (StringUtils.isEmpty(user.getPassword()) == false) {
-			System.out.println("暗号化前"+user.getPassword());
 			String encPassword = CipherUtil.encrypt(user.getPassword());
 			user.setPassword(encPassword);
-			System.out.println("暗号化後"+user.getPassword());
 			}
-
-			System.out.println("サービス空白時"+user.getPassword());
 			UserDao userDao = new UserDao();
 			userDao.update(connection, user);
 			commit(connection);

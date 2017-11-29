@@ -90,6 +90,7 @@ public class SettingsServlet extends HttpServlet {
 
 	private boolean isValid(HttpServletRequest request, List<String> messages) {
 
+		String id = request.getParameter("id");
 		String login_id = request.getParameter("login_id");
 		String password = request.getParameter("password");
 		String passwordconfirm =request.getParameter("passwordconfirm");
@@ -114,6 +115,15 @@ public class SettingsServlet extends HttpServlet {
 		if (StringUtils.isEmpty(name) == true) {
 			messages.add("名称を入力してください");
 		}
+
+		UserService usersSelect = new UserService();
+		Users user = usersSelect.getSettingLoginid(login_id,id);
+		HttpSession session = request.getSession();
+		if (user != null) {
+			messages.add("既にログインIDが使用されています");
+			session.setAttribute("errorMessages", messages);
+		}
+
 
 		// TODO アカウントが既に利用されていないか、メールアドレスが既に登録されていないかなどの確認も必要
 		if (messages.size() == 0) {

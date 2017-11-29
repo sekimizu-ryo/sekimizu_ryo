@@ -27,7 +27,7 @@
 	<input name="subject" value="${post.subject}" /><br />
 
 	<label for="text">本文(1000文字以内)</label>
-	<textarea  name="text"  rows="4" cols="40"></textarea>
+	<textarea  name="text"  rows="4" cols="40"><c:out value="${post.text}"/></textarea>
 
 	<label for="category">カテゴリー(10文字以内)</label>
 	<input name="category" value="${post.category}" /><br />

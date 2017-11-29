@@ -85,6 +85,12 @@ function Commentcheck(){
 	<c:forEach items="${posts}" var="post">
 		<label for="subject">件名</label>
 		<c:out value="${post.subject}" />
+		<label for="subject">投稿者</label>
+		<c:forEach items="${users}" var="user" >
+			<c:if test="${user.id==post.user_id}" >
+				<c:out value="${user.name}"></c:out>
+			</c:if>
+		</c:forEach>
 		<label for="text">本文</label>
 		<c:out value="${post.text}" />
 		<label for="category">カテゴリー</label>
@@ -100,7 +106,7 @@ function Commentcheck(){
 
 		<form action="comment" method="post">
 			<input type="hidden" name="postid"  value="${post.id}" id="id"/>
-		     <textarea  name="text"  rows="4" cols="40"><c:out value="${post.text}" /></textarea>
+		     <textarea  name="text"  rows="4" cols="40"><c:out value="${comment.text}" /></textarea>
 			<br />
 			<input type="submit" value="コメントを投稿">（500文字まで）
 			<br />

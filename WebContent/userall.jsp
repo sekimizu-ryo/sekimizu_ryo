@@ -60,19 +60,36 @@ function Resurrectioncheck(){
 		<c:forEach items="${users}" var="user">
 			 <tr>
 				<td><c:out value="${user.login_id}"/></td><td><c:out value="${user.name}"/></td>
-				<td><c:out value="${branche.name}"></c:out></td><td><c:out value="${department.name}"></c:out></td>
+
+			<c:forEach items="${branches}" var="branche" >
+				<c:if test="${user.branch_id==branche.id}" >
+					<td><c:out value="${branche.name}"></c:out></td>
+				</c:if>
+			</c:forEach>
+
+			<c:forEach items="${departments}" var="department" >
+				<c:if test="${user.department_id==department.id}" >
+					<td><c:out value="${department.name}"></c:out></td>
+				</c:if>
+			</c:forEach>
+
 				<td><a href='settings?id=<c:out value="${user.id}"/>'>編集</a></td>
 			 	<td>
 				 	<form action="stop" method="post">
 						<input type="hidden" name="id" value="${user.id}" id="id">
-						<c:if test="${user.is_working==0}" >
-							<input type="hidden" name="is_working" value="1" id="is_working">
-							<input type="submit" value="停止" onclick="stopcheck()"/> <br />
-						</c:if>
+						<c:if test="${user.id != loginUser.id}" >
+							<c:if test="${user.is_working==0}" >
+								<input type="hidden" name="is_working" value="1" id="is_working">
+								<input type="submit" value="停止" onclick="stopcheck()"/> <br />
+							</c:if>
 
-				        <c:if test="${user.is_working==1}">
-							<input type="hidden" name="is_working" value="0" id="is_working">
-							<input type="submit" value="復活" onclick="Resurrectioncheck()"/> <br />
+					        <c:if test="${user.is_working==1}">
+								<input type="hidden" name="is_working" value="0" id="is_working">
+								<input type="submit" value="復活" onclick="Resurrectioncheck()"/> <br />
+							</c:if>
+						</c:if>
+						<c:if test="${user.id == loginUser.id}" >
+						ログイン中
 						</c:if>
 					</form>
 				</td>

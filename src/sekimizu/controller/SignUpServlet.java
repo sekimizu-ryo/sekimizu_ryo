@@ -27,7 +27,6 @@ public class SignUpServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
-
 		List<Branches> branches = new branchesService().getBranches();
 		List<departments>departments= new departmentsService().getDepartments();
 		request.setAttribute("branches",branches);
@@ -76,13 +75,13 @@ public class SignUpServlet extends HttpServlet {
 
 		if (StringUtils.isEmpty(login_id) == true) {
 			messages.add("ログイン名を入力してください");
-			}else if (!login_id.matches("^[0-9A-Za-z]{6,20}")) {
-			messages.add("ログイン名は半角英数字で6文字以上20文字以下としてください");
-			}
+			}else if (!login_id.matches("^[0-9A-Za-z]{1,20}")) {
+				messages.add("ログイン名は半角英数字で6文字以上20文字以下としてください");
+				}
 
 		if (StringUtils.isEmpty(password) == true) {
 			messages.add("パスワードを入力してください");
-		}else if (!password.matches("^[0-9A-Za-z!?@#$%]{6,20}")) {
+		}else if (!password.matches("^[0-9A-Za-z!?@#$%]{1,20}")) {
 			messages.add("パスワードは半角文字で6文字以上20文字以下としてください");
 			}
 
@@ -93,6 +92,16 @@ public class SignUpServlet extends HttpServlet {
 		if (10 < name.length()) {
 			messages.add("名称は10文字以下で入力してください");
 		}
+
+		UserService usersSelect = new UserService();
+		Users user = usersSelect.getLoginId(login_id);
+		HttpSession session = request.getSession();
+
+		if (user != null) {
+		messages.add("既にログインIDが使用されています");
+		session.setAttribute("errorMessages", messages);
+		}
+
 
 		// TODO アカウントが既に利用されていないか、メールアドレスが既に登録されていないかなどの確認も必要
 		if (messages.size() == 0) {

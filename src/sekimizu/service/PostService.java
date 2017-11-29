@@ -34,13 +34,13 @@ public class PostService {
 	}
 
 
-	public List<Posts> getAllPost(String Sdate,String Edate,String category) {
+	public List<Posts> getAllPost(String sDate,String eDate,String category) {
 
 		Connection connection = null;
 		try {
 			connection = getConnection();
 			PostDao postDao = new PostDao();
-			List<Posts> ret = postDao.getAllPost(connection,Sdate,Edate,category);
+			List<Posts> ret = postDao.getAllPost(connection,sDate,eDate,category);
 			commit(connection);
 			return ret;
 

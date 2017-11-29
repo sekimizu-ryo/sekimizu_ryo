@@ -10,6 +10,8 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 import sekimizu.beans.Posts;
 import sekimizu.exception.SQLRuntimeException;
 
@@ -82,21 +84,21 @@ public class PostDao {
 			sql.append(" insert_date >= ?");
 			sql.append("AND");
 			sql.append(" insert_date < ?");
-
-			if(category != null){
+			if(StringUtils.isEmpty(category) == false){
 				sql.append("AND");
 				sql.append(" category = ?");
 			}
 
 			sql.append("ORDER BY insert_date DESC");
-//			String sql = "SELECT * FROM posts WHERE insert_date >= ? AND insert_date<? AND category=?";
-//			ps = connection.prepareStatement(sql);
 			ps = connection.prepareStatement(sql.toString());
-			ps.setString(1,sDate + "00:00:00");
-			ps.setString(2,eDate + "23:59:59");
-			if(category != null){
-				ps.setString(3,category);
+			ps.setString(1,sDate + " 00:00:00");
+			ps.setString(2,eDate + " 23:59:59");
+
+			if(StringUtils.isEmpty(category) == false){
+			ps.setString(3,category);
 			}
+
+			System.out.println(ps.toString());
 			ResultSet rs = ps.executeQuery();
 			List<Posts> postList = toUserList(rs);
 			return  postList;

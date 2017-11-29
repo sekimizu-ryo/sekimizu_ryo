@@ -16,8 +16,10 @@ import org.apache.commons.lang.StringUtils;
 
 import sekimizu.beans.Comment;
 import sekimizu.beans.Posts;
+import sekimizu.beans.Users;
 import sekimizu.service.CommentService;
 import sekimizu.service.PostService;
+import sekimizu.service.UserService;
 
 @WebServlet(urlPatterns = { "/index.jsp" })
 public class TopServlet extends HttpServlet {
@@ -26,9 +28,6 @@ public class TopServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request,
 		HttpServletResponse response) throws IOException, ServletException {
-
-
-
 		String Category = request.getParameter("category");
 		String Sdate = request.getParameter("StartDate");
 		String Edate = request.getParameter("EndDate");
@@ -37,10 +36,9 @@ public class TopServlet extends HttpServlet {
 		if (StringUtils.isEmpty(Sdate) == true) {
 			Sdate="2017-10-01";
 
-
-		}else
+		}else{
 			request.setAttribute("StartDate",Sdate);
-
+		}
 		if(StringUtils.isEmpty(Edate) == true){
 			Date date = new Date();
 			SimpleDateFormat EndDate = new SimpleDateFormat("yyyy-MM-dd");
@@ -52,8 +50,10 @@ public class TopServlet extends HttpServlet {
 
 		List<Posts> posts = new PostService().getAllPost(Sdate,Edate,Category);
 		List<Comment> comments = new CommentService().getComment();
+		List<Users> users = new UserService().getAllUser();
 		request.setAttribute("category",Category);
 		request.setAttribute("posts", posts);
+		request.setAttribute("users",users );
 		request.setAttribute("comments",comments);
 		request.getRequestDispatcher("top.jsp").forward(request,response);
 	}

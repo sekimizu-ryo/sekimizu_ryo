@@ -28,6 +28,7 @@ public class UserDao {
 			ps = connection.prepareStatement(sql);
 			ps.setString(1, login);
 			ps.setString(2, password);
+			System.out.println(ps.toString());
 			ResultSet rs = ps.executeQuery();
 			List<Users> userList = toUserList(rs);
 
@@ -53,6 +54,58 @@ public class UserDao {
 
 			ps = connection.prepareStatement(sql);
 			ps.setString(1, id);
+
+			ResultSet rs = ps.executeQuery();
+			List<Users> userList = toUserList(rs);
+			if (userList.isEmpty() == true) {
+				return null;
+			} else if (2 <= userList.size()) {
+				throw new IllegalStateException("2 <= userList.size()");
+			} else {
+				return userList.get(0);
+			}
+		} catch (SQLException e) {
+			throw new SQLRuntimeException(e);
+		} finally {
+			close(ps);
+		}
+	}
+
+	public Users getLoginId(Connection connection, String loginid) {
+
+		PreparedStatement ps = null;
+		try {
+			String sql = "SELECT * FROM users WHERE login_id = ?";
+
+			ps = connection.prepareStatement(sql);
+			ps.setString(1, loginid);
+
+			ResultSet rs = ps.executeQuery();
+			List<Users> userList = toUserList(rs);
+			if (userList.isEmpty() == true) {
+				return null;
+			} else if (2 <= userList.size()) {
+				throw new IllegalStateException("2 <= userList.size()");
+			} else {
+				return userList.get(0);
+			}
+		} catch (SQLException e) {
+			throw new SQLRuntimeException(e);
+		} finally {
+			close(ps);
+		}
+	}
+
+
+	public Users getSettingLoginid(Connection connection, String loginid,String id) {
+
+		PreparedStatement ps = null;
+		try {
+			String sql = "SELECT * FROM users WHERE login_id = ? AND id != ?";
+
+			ps = connection.prepareStatement(sql);
+			ps.setString(1, loginid);
+			ps.setString(2, id);
 
 			ResultSet rs = ps.executeQuery();
 			List<Users> userList = toUserList(rs);
@@ -159,6 +212,7 @@ public class UserDao {
 			ps.setInt(4, users.getbranch_id());
 		    ps.setInt(5, users.getdepartment_id());
 		    ps.setInt(6, users.getis_working());
+		    System.out.println(ps.toString());
 
 			ps.executeUpdate();
 		} catch (SQLException e) {
@@ -178,30 +232,27 @@ public class UserDao {
 			sql.append(", branch_id = ?");
 			sql.append(", department_id = ?");
 			if (StringUtils.isEmpty(users.getPassword()) == false) {
-				System.out.println("DAO確認"+users.getPassword());
 				sql.append(", password = ?");
 			}
-			System.out.println("DAO確認"+users.getPassword());
 			sql.append(" WHERE");
 			sql.append(" id = ?");
 			ps = connection.prepareStatement(sql.toString());
 
 			if (StringUtils.isEmpty(users.getPassword()) == false) {
-			ps.setString(1, users.getlogin_id());
-			ps.setString(2, users.getName());
-			ps.setInt(3, users.getbranch_id());
-		    ps.setInt(4, users.getdepartment_id());
-			ps.setInt(5, users.getId());
-			System.out.println("DAO確認"+users.getPassword());
+				ps.setString(1, users.getlogin_id());
+				ps.setString(2, users.getName());
+				ps.setInt(3, users.getbranch_id());
+				ps.setInt(4, users.getdepartment_id());
+				ps.setString(5, users.getPassword());
+				ps.setInt(6, users.getId());
+
 			}else{
 				ps.setString(1, users.getlogin_id());
 				ps.setString(2, users.getName());
 				ps.setInt(3, users.getbranch_id());
-			    ps.setInt(4, users.getdepartment_id());
-				ps.setString(5, users.getPassword());
-				ps.setInt(6, users.getId());
+				ps.setInt(4, users.getdepartment_id());
+				ps.setInt(5, users.getId());
 			}
-			System.out.println(ps.toString());
 			int count = ps.executeUpdate();
 			if (count == 0) {
 				throw new NoRowsUpdatedRuntimeException();
