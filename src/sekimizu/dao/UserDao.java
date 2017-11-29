@@ -131,7 +131,7 @@ public class UserDao {
 
 		PreparedStatement ps = null;
 		try {
-			String sql = "SELECT * FROM users ";
+			String sql = "SELECT * FROM users  ORDER BY branch_id,department_id ASC";
 			ps = connection.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			List<Users> userList = toUserList(rs);

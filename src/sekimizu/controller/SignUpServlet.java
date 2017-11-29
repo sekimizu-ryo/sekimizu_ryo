@@ -71,6 +71,7 @@ public class SignUpServlet extends HttpServlet {
 	private boolean isValid(HttpServletRequest request, List<String> messages ) {
 		String login_id = request.getParameter("login_id");
 		String password = request.getParameter("password");
+		String passwordconfirm =request.getParameter("passwordconfirm");
 		String name = request.getParameter("name");
 		int branch_id =Integer.parseInt(request.getParameter("branch_id"));
 		int department_id =Integer.parseInt(request.getParameter("department_id"));
@@ -83,7 +84,7 @@ public class SignUpServlet extends HttpServlet {
 
 		if (StringUtils.isEmpty(password) == true) {
 			messages.add("パスワードを入力してください");
-		}else if (!password.matches("^[0-9A-Za-z!?@#$%]{1,20}")) {
+		}else if (!password.matches("^[0-9A-Za-z\\p{Punct}*$]{6,20}")) {
 			messages.add("パスワードは半角文字で6文字以上20文字以下としてください");
 			}
 
@@ -91,7 +92,10 @@ public class SignUpServlet extends HttpServlet {
 			messages.add("名称を入力してください");
 		}
 
-		System.out.println(branch_id);
+		if (!password.equals(passwordconfirm)) {
+			messages.add("パスワードが一致しません。");
+		}
+
 		if (branch_id==1&&department_id==3||branch_id==1&&department_id==4||branch_id==2&&department_id==1||branch_id==2&&department_id==2
 				||branch_id==3&&department_id==1||branch_id==3&&department_id==2
 				||branch_id==4&&department_id==1||branch_id==4&&department_id==2) {

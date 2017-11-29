@@ -32,6 +32,7 @@
 	<input name="password" type="password" id="password"/> <br />
 
 	<input type="submit" value="ログイン" /> <br />
+		<c:remove var="login_id" scope="session"/>
 </form>
 <div class="copyright">Copyright(c)ryo sekimizu</div>
 </div>

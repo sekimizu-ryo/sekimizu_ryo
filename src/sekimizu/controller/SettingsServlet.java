@@ -118,6 +118,8 @@ public class SettingsServlet extends HttpServlet {
 		String password = request.getParameter("password");
 		String passwordconfirm =request.getParameter("passwordconfirm");
 		String name = request.getParameter("name");
+		int branch_id =Integer.parseInt(request.getParameter("branch_id"));
+		int department_id =Integer.parseInt(request.getParameter("department_id"));
 
 		if (StringUtils.isEmpty(login_id) == true) {
 			messages.add("ログイン名を入力してください");
@@ -127,7 +129,7 @@ public class SettingsServlet extends HttpServlet {
 
 		if(StringUtils.isEmpty(password) == true){
 
-		}else if (!password.matches("^[0-9A-Za-z!?@#$%]{1,20}")) {
+		}else if (!password.matches("^[0-9A-Za-z\\p{Punct}*$]{6,20}")) {
 			messages.add("パスワードは半角文字で6文字以上20文字以下としてください");
 			}
 
@@ -139,6 +141,12 @@ public class SettingsServlet extends HttpServlet {
 			messages.add("名称を入力してください");
 		}
 
+		if (branch_id==1&&department_id==3||branch_id==1&&department_id==4||branch_id==2&&department_id==1||branch_id==2&&department_id==2
+				||branch_id==3&&department_id==1||branch_id==3&&department_id==2
+				||branch_id==4&&department_id==1||branch_id==4&&department_id==2) {
+			messages.add("不正な組み合わせです。");
+
+		}
 		UserService usersSelect = new UserService();
 		Users user = usersSelect.getSettingLoginid(login_id,id);
 		HttpSession session = request.getSession();

@@ -61,6 +61,7 @@ function Commentcheck(){
 		<a href="post">新規投稿画面</a>
 		<a href="userall">管理画面</a>
 		<a href="logout">ログアウト</a>
+		<a href="./">ホーム</a>
 	</c:if>
 </div>
 
@@ -79,13 +80,17 @@ function Commentcheck(){
 		<input type="date" name="EndDate"  value="${EndDate}">
 		<input type="submit" value="検索" />
 	</form>
-		<br/>
 
+	<form action="./" method="get">
+	<input type="submit" value="クリア" />
+	</form>
+</div>
 		<br/>
-
+<div class="form-area">
 	<c:forEach items="${posts}" var="post">
 		<label for="subject">件名</label>
 		<c:out value="${post.subject}" />
+
 		<label for="subject">投稿者</label>
 		<c:forEach items="${users}" var="user" >
 			<c:if test="${user.id==post.user_id}" >
@@ -93,13 +98,12 @@ function Commentcheck(){
 			</c:if>
 		</c:forEach>
 		<label for="text">本文</label>
-		<c:forEach var="str" items="${fn:split(post.text,'
-')}" ><c:out value="${str}" /><br></c:forEach>
+		<c:out value="${post.text}" />
 		<label for="category">カテゴリー</label>
 		<c:out value="${post.category}" />
 		<br />
 		<label for="insertDate">日時</label>
-		<c:out value="${post.insertDate}" />
+		<fmt:formatDate value="${post.insertDate}" pattern="yyyy/MM/dd HH:mm:ss" />
 
 
 	<c:if test="${post.user_id == loginUser.id}" >
@@ -137,8 +141,8 @@ function Commentcheck(){
 	</c:forEach>
 			<br />
 	</c:forEach>
-
 </div>
+
 <div class="copyright">Copyright(c)ryo sekimizu</div>
 </div>
 </body>

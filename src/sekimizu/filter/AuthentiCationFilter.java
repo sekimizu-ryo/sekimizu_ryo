@@ -39,7 +39,7 @@ public class AuthentiCationFilter implements Filter {
 		if (loginUser.getbranch_id() != 1||loginUser.getdepartment_id() != 1) {
 			messages.add("権限がありません");
 				session.setAttribute("errorMessages", messages);
-				((HttpServletResponse)response).sendRedirect("login");
+				((HttpServletResponse)response).sendRedirect("./");
 				return ;
 		}
 		chain.doFilter(request, response); // サーブレットを実行
