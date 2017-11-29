@@ -29,11 +29,7 @@ public class SettingsServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
-		HttpSession session = request.getSession();
-		Users loginUser = (Users) session.getAttribute("loginUser");
-
 		String id = request.getParameter("id");
-		loginUser.setId(Integer.parseInt(request.getParameter("id")));
 		request.setAttribute("id", id);
 		Users editUser = new UserService().getId(id);
 		request.setAttribute("editUser", editUser);

@@ -2,7 +2,6 @@ package sekimizu.controller;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -31,7 +30,6 @@ public class TopServlet extends HttpServlet {
 		String Category = request.getParameter("category");
 		String Sdate = request.getParameter("StartDate");
 		String Edate = request.getParameter("EndDate");
-		List<String> messages = new ArrayList<String>();
 
 		if (StringUtils.isEmpty(Sdate) == true) {
 			Sdate="2017-10-01";
@@ -57,22 +55,4 @@ public class TopServlet extends HttpServlet {
 		request.setAttribute("comments",comments);
 		request.getRequestDispatcher("top.jsp").forward(request,response);
 	}
-
-
-		private boolean isValid(HttpServletRequest request, List<String>messages) {
-			String category = request.getParameter("category");
-
-		if(StringUtils.isEmpty(category) == true){
-			messages.add("カテゴリを入力してください");
-		}
-
-		if (messages.size() == 0) {
-			return true;
-		} else {
-			return false;
-		}
-
-
-	}
-
 }

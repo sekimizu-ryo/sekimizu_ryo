@@ -44,8 +44,8 @@ public class NewCommentServlet extends HttpServlet {
 			comment.setPostId(Integer.parseInt(request.getParameter("postid")));
 			comment.setText(request.getParameter("text"));
 			session.setAttribute("errorMessages", comments);
-			request.setAttribute("comment", comment);
-			request.getRequestDispatcher("top.jsp").forward(request,response);
+			response.sendRedirect("./");
+
 		}
 	}
 

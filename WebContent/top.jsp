@@ -99,10 +99,13 @@ function Commentcheck(){
 		<label for="insertDate">日時</label>
 		<c:out value="${post.insertDate}" />
 
+
+	<c:if test="${post.user_id == loginUser.id}" >
 		<form action="delete" method="post">
 			<input type="hidden" name="id" value="${post.id}" id="id">
 			<input type="submit" value="削除" onclick="return Postcheck()" /> <br />
 		</form>
+	</c:if>
 
 		<form action="comment" method="post">
 			<input type="hidden" name="postid"  value="${post.id}" id="id"/>
@@ -111,15 +114,22 @@ function Commentcheck(){
 			<input type="submit" value="コメントを投稿">（500文字まで）
 			<br />
 		</form>
-
 	<c:forEach items="${comments}" var="comment">
-			<c:if test="${post.id == comment.postId}">
-				<label for="text">コメント投稿結果</label>
-				<c:out value="${comment.text}" />
-		<form action="commentdelete" method="post">
-				<input type="hidden" name="id" value="${comment.id}" id="id">
-				<input type="submit" value="コメント削除" onclick="return Commentcheck()"/> <br />
-		</form>
+		<c:if test="${post.id == comment.postId}">
+			<label for="text">コメント投稿結果</label>
+			<c:forEach items="${users}" var="user" >
+				<c:if test="${user.id==comment.userId}" >
+					<c:out value="${user.name}"></c:out>
+				</c:if>
+			</c:forEach>
+			<br>
+			<c:out value="${comment.text}" />
+			<c:if test="${comment.userId == loginUser.id}" >
+				<form action="commentdelete" method="post">
+					<input type="hidden" name="id" value="${comment.id}" id="id">
+					<input type="submit" value="コメント削除" onclick="return Commentcheck()"/> <br />
+				</form>
+			</c:if>
 		</c:if>
 	</c:forEach>
 			<br />
