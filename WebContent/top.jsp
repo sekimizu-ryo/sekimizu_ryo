@@ -57,11 +57,10 @@ function Commentcheck(){
 }
 </script>
 
-	<c:if test="${ not empty loginUser }">
+
 		<a href="post">新規投稿画面</a>
 		<a href="userall">管理画面</a>
 		<a href="logout">ログアウト</a>
-	</c:if>
 </div>
 
 <c:if test="${ not empty loginUser }">

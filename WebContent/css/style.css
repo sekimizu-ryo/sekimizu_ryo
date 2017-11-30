@@ -18,6 +18,10 @@ body {
 }
 
 .header {
+	text-align: left;
+}
+
+.header2 {
 	text-align: right;
 }
 
@@ -124,13 +128,13 @@ label {
 	display: block;
 }
 
-td {
-	font-size: 18px;
+td, th {
+	font-size: 14px;
+	width: 120px;
+	text-align: center;
 }
 
-th {
-	font-size: 20px;
-}
+
 
 .errorMessages {
 	margin-top: 10px;
