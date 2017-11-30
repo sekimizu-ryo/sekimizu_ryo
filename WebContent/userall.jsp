@@ -74,18 +74,19 @@ function Resurrectioncheck(){
 			</c:forEach>
 
 				<td><a href='settings?id=<c:out value="${user.id}"/>'>編集</a></td>
+
 			 	<td>
 				 	<form action="stop" method="post">
 						<input type="hidden" name="id" value="${user.id}" id="id">
 						<c:if test="${user.id != loginUser.id}" >
 							<c:if test="${user.is_working==0}" >
 								<input type="hidden" name="is_working" value="1" id="is_working">
-								<input type="submit" value="停止" onclick="stopcheck()"/> <br />
+								<input type="submit" value="停止" onclick=" return stopcheck()"/> <br />
 							</c:if>
 
 					        <c:if test="${user.is_working==1}">
 								<input type="hidden" name="is_working" value="0" id="is_working">
-								<input type="submit" value="復活" onclick="Resurrectioncheck()"/> <br />
+								<input type="submit" value="復活" onclick=" return Resurrectioncheck()"/> <br />
 							</c:if>
 						</c:if>
 						<c:if test="${user.id == loginUser.id}" >

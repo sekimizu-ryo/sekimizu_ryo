@@ -61,19 +61,18 @@ function Commentcheck(){
 		<a href="post">新規投稿画面</a>
 		<a href="userall">管理画面</a>
 		<a href="logout">ログアウト</a>
-		<a href="./">ホーム</a>
 	</c:if>
 </div>
 
 <c:if test="${ not empty loginUser }">
 	<div class="profile">
-		<div class="login_id"><h3><c:out value="${loginUser.login_id}" />でログイン中！！！</h3></div>
+		<div class="login_id"><h3>ようこそ<c:out value="${loginUser.login_id}" />さん</h3></div>
 	</div>
 </c:if>
 
 <div class="form-area">
 	<form action="./" method="get">
-		<label for="category">カテゴリー</label>
+		<h3><label for="category">カテゴリー検索</label></h3>
          <input type="text" name="category" value="${category}" />
          <br/>
 		 <input type="date" name="StartDate" value="${StartDate}" >
@@ -85,24 +84,30 @@ function Commentcheck(){
 	<input type="submit" value="クリア" />
 	</form>
 </div>
-		<br/>
+<hr color="#000000" width="790" size="10" />
 <div class="form-area">
 	<c:forEach items="${posts}" var="post">
-		<label for="subject">件名</label>
+		<h4><label for="subject">件名</label></h4>
 		<c:out value="${post.subject}" />
-
-		<label for="subject">投稿者</label>
+		<br/>
+		<br/>
+		<h4><label for="subject">投稿者</label></h4>
 		<c:forEach items="${users}" var="user" >
 			<c:if test="${user.id==post.user_id}" >
 				<c:out value="${user.name}"></c:out>
 			</c:if>
 		</c:forEach>
-		<label for="text">本文</label>
+		<br/>
+		<br/>
+		<h4><label for="text">本文</label></h4>
 		<c:out value="${post.text}" />
-		<label for="category">カテゴリー</label>
+		<br/>
+		<br/>
+		<h4><label for="category">カテゴリー</label></h4>
 		<c:out value="${post.category}" />
 		<br />
-		<label for="insertDate">日時</label>
+		<br/>
+		<h4><label for="insertDate">日時</label></h4>
 		<fmt:formatDate value="${post.insertDate}" pattern="yyyy/MM/dd HH:mm:ss" />
 
 
@@ -112,23 +117,26 @@ function Commentcheck(){
 			<input type="submit" value="削除" onclick="return Postcheck()" /> <br />
 		</form>
 	</c:if>
-
+   <br/>
 		<form action="comment" method="post">
 			<input type="hidden" name="postid"  value="${post.id}" id="id"/>
 		     <textarea  name="text"  rows="4" cols="40"><c:out value="${comment.text}" /></textarea>
 			<br />
-			<input type="submit" value="コメントを投稿">（500文字まで）
+			<input type="submit" value="コメントを投稿">（500文字以内）
 			<br />
 		</form>
 	<c:forEach items="${comments}" var="comment">
 		<c:if test="${post.id == comment.postId}">
-			<label for="text">コメント投稿結果</label>
+			<h4><label for="text">コメント投稿結果</label></h4>
+			<br/>
 			<c:forEach items="${users}" var="user" >
 				<c:if test="${user.id==comment.userId}" >
+					<h4><label for="text">投稿者</label></h4>
 					<c:out value="${user.name}"></c:out>
 				</c:if>
 			</c:forEach>
 			<br>
+			<h4><label for="text">コメント内容</label></h4>
 			<c:forEach var="str" items="${fn:split(comment.text,'
 ')}" ><c:out value="${str}" /><br></c:forEach>
 			<c:if test="${comment.userId == loginUser.id}" >
@@ -140,7 +148,9 @@ function Commentcheck(){
 		</c:if>
 	</c:forEach>
 			<br />
+			<hr color="#000000" width="790" size="10" />
 	</c:forEach>
+
 </div>
 
 <div class="copyright">Copyright(c)ryo sekimizu</div>

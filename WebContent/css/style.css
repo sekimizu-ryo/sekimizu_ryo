@@ -124,6 +124,14 @@ label {
 	display: block;
 }
 
+td {
+	font-size: 18px;
+}
+
+th {
+	font-size: 20px;
+}
+
 .errorMessages {
 	margin-top: 10px;
 	margin-right: 10px;

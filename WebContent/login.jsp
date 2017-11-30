@@ -26,13 +26,11 @@
 <form action="login" method="post"><br />
 
 	<label for="login_id">ログインID</label>
-	<input name="login_id" id="login_id"/> <br />
-
+	<input name="login_id"  value="${login_id}" id="login_id"/> <br />
 	<label for="password">パスワード</label>
 	<input name="password" type="password" id="password"/> <br />
 
 	<input type="submit" value="ログイン" /> <br />
-		<c:remove var="login_id" scope="session"/>
 </form>
 <div class="copyright">Copyright(c)ryo sekimizu</div>
 </div>

@@ -38,6 +38,7 @@
 	<label for="name">名称</label>
 	<input name="name" value="${editUser.name}" id="name"/><br />
 
+<c:if test="${editUser.id != loginUser.id}">
 	<label for="branch_id">支店</label>
 	<select name="branch_id">
 		<c:forEach items="${branches}" var="branche" >
@@ -51,7 +52,11 @@
 			<option value="${department.id}" <c:if test="${editUser.department_id == department.id}">selected </c:if>> <c:out value="${department.name}"></c:out> </option>
 		</c:forEach>
 	</select>
-	<br />
+</c:if>
+<input type="hidden" name="branch_id"   value="${editUser.branch_id}"  id="branche.id"/>
+<input type="hidden" name="department_id" value="${editUser.department_id}" id="department.id"/>
+
+	   <br/>
 	   <input type="submit" value="編集" />
 		<br />
 		<a href="userall">戻る</a>

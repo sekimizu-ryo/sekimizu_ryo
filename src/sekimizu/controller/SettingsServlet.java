@@ -144,7 +144,7 @@ public class SettingsServlet extends HttpServlet {
 		if (branch_id==1&&department_id==3||branch_id==1&&department_id==4||branch_id==2&&department_id==1||branch_id==2&&department_id==2
 				||branch_id==3&&department_id==1||branch_id==3&&department_id==2
 				||branch_id==4&&department_id==1||branch_id==4&&department_id==2) {
-			messages.add("不正な組み合わせです。");
+			messages.add("支店と部署・役職が不正な組み合わせです。");
 
 		}
 		UserService usersSelect = new UserService();

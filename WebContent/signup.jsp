@@ -38,14 +38,14 @@
  	<label for="branch_id">支店</label>
 	<select name="branch_id">
 		<c:forEach items="${branches}" var="branche" >
-		<option value="${branche.id}"> <c:out value="${branche.name}"></c:out> </option>
+		<option value="${branche.id}" <c:if test="${users.branch_id == branche.id}">selected </c:if>> <c:out value="${branche.name}"></c:out> </option>
 		</c:forEach>
 	</select>
 
 	<label for="department_id">部署・役職</label>
 	<select name="department_id">
 		<c:forEach items="${departments}" var="department" >
-			<option value="${department.id}"> <c:out value="${department.name}"></c:out> </option>
+			<option value="${department.id}" <c:if test="${users.department_id == department.id}">selected </c:if>> <c:out value="${department.name}"></c:out> </option>
 		</c:forEach>
 	</select>
 
