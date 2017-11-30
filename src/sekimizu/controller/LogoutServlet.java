@@ -18,9 +18,8 @@ public class LogoutServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
-		session.invalidate(); // セッションの無効化
-
 		response.sendRedirect("login");
+		session.invalidate(); // セッションの無効化
 	}
 
 }

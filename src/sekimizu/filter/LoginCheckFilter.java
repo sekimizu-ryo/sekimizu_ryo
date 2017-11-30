@@ -37,6 +37,7 @@ public class LoginCheckFilter implements Filter {
 				messages.add("ログアウトされています。ログインしてください。");
 				session.setAttribute("errorMessages", messages);
 				((HttpServletResponse)response).sendRedirect("login");
+				session.invalidate(); // セッションの無効化
 				return ;
 			}
 		}
